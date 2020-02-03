@@ -1,0 +1,6 @@
+{
+	"name": "doqu",
+	"version": "0.1",
+	"main": "main.mjs",
+	"license": "0BSD"
+}
