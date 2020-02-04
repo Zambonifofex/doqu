@@ -147,7 +147,7 @@ import l from "doqu"
 export default user =>
 	l.header
 	(
-		l.nav(l.a({href: "/home"}, "Home"), l.a({href: "/about"}, "About"), l.a({href: "/contact"}, "Contact")),
+		l.nav(l.a({href: "/home"}, "Home"), " ", l.a({href: "/about"}, "About"), " ", l.a({href: "/contact"}, "Contact")),
 		l.p
 		(
 			"Hello, ",
