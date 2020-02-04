@@ -130,7 +130,7 @@ let doc =
 		(
 			l.h1("doqu library"),
 			l.p("doqu is a simple library for manipulating DOM elements in JS."),
-			l.p(l.small("It is less than 1kB uncompressed!")),
+			l.p(l.small("It is less than 2kB uncompressed!")),
 		),
 	)()
 
