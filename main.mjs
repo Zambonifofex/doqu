@@ -21,8 +21,22 @@ export let from = (element, ...properties) =>
 						modify(...object)
 					else
 						for (let key in object)
-							if (key.startsWith(".")) element[key.slice(1)] = object[key]
-							else element.setAttribute(key, object[key])
+						{
+							if (key.startsWith("."))
+							{
+								element[key.slice(1)] = object[key]
+							}
+							else
+							{
+								let value = object[key]
+								if (value === undefined) continue
+								if (value === null) continue
+								
+								if (value === true) element.setAttribute(key, "")
+								else if (value === false) element.removeAttribute(key)
+								else element.setAttribute(key, value)
+							}
+						}
 					break
 				
 				case "function":
