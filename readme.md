@@ -137,6 +137,52 @@ let doc =
 console.log("<!doctype html>\n" + doc.outerHTML)
 ~~~
 
+Templating (on server):
+
+~~~JavaScript
+// "header.mjs"
+
+import l from "doqu"
+
+export default user =>
+	l.header
+	(
+		l.nav(l.a({href: "/home"}, "Home"), l.a({href: "/about"}, "About"), l.a({href: "/contact"}, "Contact")),
+		l.p
+		(
+			"Hello, ",
+			() => user ? l.a({href: user.url}, user.name) : "Guest",
+			"!",
+			() => user ? null : [" ", l.a({href: "/login"}, "Login"), " ", l.a({href: "/join"}, "Join")],
+		),
+	)
+~~~
+
+~~~JavaScript
+// "main.mjs"
+
+import l from "doqu"
+import header from "./header.mjs"
+import content from "./content.mjs" // Somewhere else.
+
+export default model =>
+	l.html({lang: "en"})
+	(
+		l.head
+		(
+			l.meta({charset: "utf-8"}),
+			l.title(`${model.title} \u2014 My Website`),
+			l.link({rel: "stylesheet", href: "/style.css"}),
+		),
+		l.body
+		(
+			header(model.user),
+			content(model),
+			l.footer("Made in 2020."),
+		),
+	)
+~~~
+
 License — Zero-clause BSD (0BSD)
 ---
 
