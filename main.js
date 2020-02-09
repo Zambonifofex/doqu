@@ -59,8 +59,7 @@ export let from = (element, ...properties) =>
 		return modify
 	}
 	
-	modify(...properties)
-	return modify
+	return modify(properties)
 }
 
 export let given = create => new Proxy({}, {get: (o, name) => name in o || typeof name === "symbol" ? o[name] : from(create(name))})

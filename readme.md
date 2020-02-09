@@ -151,9 +151,9 @@ export default user =>
 		l.p
 		(
 			"Hello, ",
-			() => user ? l.a({href: user.url}, user.name) : "Guest",
+			user ? l.a({href: user.url}, user.name) : "Guest",
 			"!",
-			() => user ? null : [" ", l.a({href: "/login"}, "Login"), " ", l.a({href: "/join"}, "Join")],
+			user ? null : [" ", l.a({href: "/login"}, "Login"), " ", l.a({href: "/join"}, "Join")],
 		),
 	)
 ~~~
