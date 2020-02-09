@@ -32,12 +32,17 @@ export let from = (element, ...properties) =>
 						for (let key in object)
 						{
 							let value = object[key]
-							if (value === undefined) continue
-							if (value === null) continue
-							
-							if (value === true) element.setAttribute(key, "")
-							else if (value === false) element.removeAttribute(key)
-							else element.setAttribute(key, value)
+							let setAttribute = value =>
+							{
+								if (value === undefined) continue
+								if (value === null) continue
+								
+								if (value === true) element.setAttribute(key, "")
+								else if (value === false) element.removeAttribute(key)
+								else element.setAttribute(key, value)
+							}
+							if (typeof value === "function") value(value => setAttribute(value), () => element.getAttribute(key))
+							else setAttribute(value)
 						}
 					break
 				
