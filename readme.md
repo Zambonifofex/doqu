@@ -40,7 +40,7 @@ If the argument is iterable (e.g. an array), `modify` will behave as if every el
 modify([{class: "example"}, "Hello, ", document.createElement("input"), "!"])
 ~~~
 
-If the argument is a function, `modify` will call it with no arguments and reprocess the result. (Note: `this` will be bound to the element.)
+If the argument is a function, `modify` will call pass itself as the argument and reprocess the result.
 
 ~~~JavaScript
 modify(() => "Hello!")

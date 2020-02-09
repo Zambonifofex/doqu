@@ -1,3 +1,5 @@
+export let replacement = Symbol()
+
 export let from = (element, ...properties) =>
 {
 	let modify = (...properties) =>
@@ -6,6 +8,13 @@ export let from = (element, ...properties) =>
 		
 		for (let object of properties)
 		{
+			if (typeof object === "object" || typeof object === "function")
+			{
+				let other
+				while (other = object[replacement])
+					object = other
+			}
+			
 			switch (typeof object)
 			{
 				case "string":
@@ -40,10 +49,12 @@ export let from = (element, ...properties) =>
 					break
 				
 				case "function":
-					modify(object.call(element))
+					modify(object(modify))
 					break
 			}
 		}
+		
+		modify[replacement] = element
 		
 		return modify
 	}
