@@ -1,37 +1,37 @@
 export let replacement = Symbol()
 
-export let from = (element, ...properties) =>
+export let from = (element, ...changes) =>
 {
-	let modify = (...properties) =>
+	let modify = (...changes) =>
 	{
-		if (properties.length === 0) return element
+		if (changes.length === 0) return element
 		
-		for (let object of properties)
+		for (let change of changes)
 		{
-			if (typeof object === "object" || typeof object === "function")
+			if (typeof change === "object" || typeof change === "function")
 			{
 				let other
-				while (other = object[replacement])
-					object = other
+				while (other = change[replacement])
+					change = other
 			}
 			
-			switch (typeof object)
+			switch (typeof change)
 			{
 				case "string":
 				case "number":
 				case "bigint":
-					element.append(object)
+					element.append(change)
 					break
 				
 				case "object":
-					if ("ownerDocument" in object)
-						element.append(object)
-					else if (object[Symbol.iterator])
-						modify(...object)
+					if ("ownerDocument" in change)
+						element.append(change)
+					else if (change[Symbol.iterator])
+						modify(...change)
 					else
-						for (let key in object)
+						for (let key in change)
 						{
-							let value = object[key]
+							let value = change[key]
 							let setAttribute = value =>
 							{
 								if (value === undefined) continue
@@ -47,7 +47,7 @@ export let from = (element, ...properties) =>
 					break
 				
 				case "function":
-					modify(object(modify))
+					modify(change(modify))
 					break
 			}
 		}
@@ -57,7 +57,7 @@ export let from = (element, ...properties) =>
 		return modify
 	}
 	
-	return modify(properties)
+	return modify(changes)
 }
 
 export let given = create => new Proxy({}, {get: (o, name) => name in o || typeof name === "symbol" ? o[name] : from(create(name))})
