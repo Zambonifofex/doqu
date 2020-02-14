@@ -34,8 +34,8 @@ export let from = (element, ...changes) =>
 							let value = change[key]
 							let setAttribute = value =>
 							{
-								if (value === undefined) continue
-								if (value === null) continue
+								if (value === undefined) return
+								if (value === null) return
 								
 								if (value === true) element.setAttribute(key, "")
 								else if (value === false) element.removeAttribute(key)
