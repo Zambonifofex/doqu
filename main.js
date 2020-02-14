@@ -41,7 +41,7 @@ export let from = (element, ...changes) =>
 								else if (value === false) element.removeAttribute(key)
 								else element.setAttribute(key, value)
 							}
-							if (typeof value === "function") value(value => setAttribute(value), () => element.getAttribute(key))
+							if (typeof value === "function") value(value => setAttribute(value), modify, key)
 							else setAttribute(value)
 						}
 					break
