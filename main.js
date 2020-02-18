@@ -26,7 +26,7 @@ export let from = (element, ...changes) =>
 				case "object":
 					if ("ownerDocument" in change)
 						element.append(change)
-					else if (change[Symbol.iterator])
+					else if (change[Symbol.iterator] || "next" in change)
 						modify(...change)
 					else
 						for (let key in change)
